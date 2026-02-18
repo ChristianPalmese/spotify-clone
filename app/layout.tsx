@@ -21,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={figtree.variable}>
-        <Sidebar>{children}</Sidebar> 
+        <Sidebar>
+          {children}
+          </Sidebar> 
       </body>
     </html>
   );
