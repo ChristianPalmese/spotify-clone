@@ -102,16 +102,26 @@ justify-between
         >
           <div>
             <Button className="
-            bg-transparent">
-              
+            bg-transparent
+            text-neutral-300
+            font-medium"
+            onClick={() => {}}>
+              Sign Up
             </Button>
           </div>
-
-
+            <div>
+            <Button className="
+            bg-white
+            px-6
+            py-2" 
+            onClick={() => {}}>
+              Login
+            </Button>
+            
+          </div>
         </div>
-
-
       </div>
+      {children}
     </div>
   );
 };
