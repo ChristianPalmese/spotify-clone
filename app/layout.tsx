@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
+// import SupabaseProvider from "@/providers/SupabaseProvider";
 
 const figtree = Figtree({
   variable: "--font-geist-sans",
@@ -21,10 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={figtree.variable}>
-        <Sidebar>
-          {children}
-          </Sidebar> 
+          <Sidebar>{children}</Sidebar>
       </body>
     </html>
   );
 }
+ 
