@@ -1,16 +1,15 @@
 "use client";
 
-import Modal from "@/app/components/Modal";
+import AuthModal from "../app/components/AuthModal";
+import UploadModal from "../app/components/UploadModal";
 
 const ModalProvider = () => {
-  return <Modal title="Test Modal"
-  description="Test Desctiption"
-  isOpen
-  onChange={() => {}}
-  >
-  Test Children
-  </Modal>
-
+  return (
+    <>
+      <AuthModal />
+      <UploadModal />
+    </>
+  );
 };
 
 export default ModalProvider;

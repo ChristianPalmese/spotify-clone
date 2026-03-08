@@ -6,6 +6,12 @@ import { HiHome } from "react-icons/hi";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 import Button from "./Button";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import { useMemo } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { FaUserAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -13,8 +19,20 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
+  const authModal = useAuthModal();
   const router = useRouter();
-  const handleLogout = () => {};
+  const supabaseClient = useMemo(() => createClient(), []);
+  const { user } = useUser();
+
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    router.refresh();
+    if (error) {
+      toast.error(error.message);
+    }else{
+      toast.success('Logged Out')
+    }
+  };
   return (
     <div
       className={twMerge(
@@ -44,7 +62,7 @@ justify-between
     "
         >
           <button
-          onClick={() => router.back()}
+            onClick={() => router.back()}
             className="
             rounded-full
             bg-black
@@ -58,7 +76,6 @@ justify-between
           </button>
           <button
             onClick={() => router.forward()}
-
             className="
             rounded-full
             bg-black
@@ -72,53 +89,77 @@ justify-between
           </button>
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
-            <button className="
+          <button
+            className="
             rounded-full
             p-2
             bg-white
             items-center
             justify-center
             hover:opacity-75
-            transition">
-                <HiHome className="text-black" size={20}/>
-            </button>
-                        <button className="
+            transition"
+          >
+            <HiHome className="text-black" size={20} />
+          </button>
+          <button
+            className="
             rounded-full
             p-2
             bg-white
             items-center
             justify-center
             hover:opacity-75
-            transition">
-                <BiSearch className="text-black" size={20}/>
-            </button>
+            transition"
+          >
+            <BiSearch className="text-black" size={20} />
+          </button>
         </div>
-        <div className="
+        <div
+          className="
         flex
         justify-between
         items-center
         gap-x-4
         "
         >
-          <div>
-            <Button className="
-            bg-transparent
-            text-neutral-300
-            font-medium"
-            onClick={() => {}}>
-              Sign Up
-            </Button>
-          </div>
-            <div>
-            <Button className="
-            bg-white
-            px-6
-            py-2" 
-            onClick={() => {}}>
-              Login
-            </Button>
-            
-          </div>
+          {user ? (
+            <div className="flex gap-x-4 items-center">
+              <Button className="bg-white px-6 py-2" onClick={handleLogout}>
+                Logoout
+              </Button>
+              <Button onClick={() => router.push('/account')} className="bg-white">
+                <FaUserAlt/>
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div>
+                <Button
+                  className="
+          bg-transparent
+          text-neutral-300
+          font-medium
+        "
+                  onClick={authModal.onOpen}
+                >
+                  Sign Up
+                </Button>
+              </div>
+
+              <div>
+                <Button
+                  className="
+          bg-white
+          px-6
+          py-2
+        "
+                  onClick={authModal.onOpen}
+                >
+                  Login
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
       {children}

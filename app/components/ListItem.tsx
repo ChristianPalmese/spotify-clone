@@ -24,7 +24,7 @@ const ListItem : React.FC<ListItemProps> = ({
     return ( 
 
         <button
-        onClick={onclick}
+        onClick={onClick}
         className="
         relative
         group
@@ -62,7 +62,7 @@ const ListItem : React.FC<ListItemProps> = ({
             justify-center
             bg-green-500
             p-4
-            drop-shadown-md
+            drop-shadow-md
             right-5
             group-hover:opacity-110
             ">
