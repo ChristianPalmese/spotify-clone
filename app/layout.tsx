@@ -5,6 +5,8 @@ import Sidebar from "./components/Sidebar";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
+import getSongsByUserId from "@/actions/getSongsByUserId";
+import getSongs from "@/actions/getSongs";
 // import SupabaseProvider from "@/providers/SupabaseProvider";
 
 const figtree = Figtree({
@@ -17,18 +19,24 @@ export const metadata: Metadata = {
   description: "Listen to music!",
 };
 
-export default function RootLayout({
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userSongs = await getSongsByUserId();
+  //const userSongs = await getSongs();
   return (
     <html lang="en">
       <body className={figtree.variable}>
         <ToasterProvider/>
           <UserProvider>
             <ModalProvider />
-            <Sidebar>{children}</Sidebar>
+            <Sidebar songs={userSongs}>
+              {children}
+              </Sidebar>
           </UserProvider>
       </body>
     </html>

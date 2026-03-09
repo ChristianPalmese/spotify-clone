@@ -4,7 +4,7 @@ import ListItem from "../components/ListItem";
 import PageContent from "./components/PageContent";
 
 //non salverà niente nemmeno nella cache
-export const rivalidate = 0;
+export const revalidate = 0;
 
 export default async function Home() {
 const songs = await getSongs();
@@ -50,7 +50,7 @@ const songs = await getSongs();
         </div>
       </Header>
       <div className=" mt-2 mb-7 px-6">
-        <div className="felx justify-between items-center">
+        <div className="flex justify-between items-center">
           <h1 className=" text-white text-2xl font-semibold">
             Newest songs
           </h1>
