@@ -7,6 +7,7 @@ import { Song } from "@/types"
 import { useUser } from "@/hooks/useUser"
 import LikeButton from "@/app/components/LikeButton"
 import MediaItem from "@/app/components/MediaItem"
+import useOnPlay from "@/hooks/useOnPlay"
 
 interface LikedContentProps {
   songs: Song[]
